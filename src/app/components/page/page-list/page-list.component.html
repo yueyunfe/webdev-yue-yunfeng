@@ -1,0 +1,68 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-text pull-left widgetsNavBar">
+      <a class="navbar-link" [routerLink]="['../website/website-list']">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+    </div>
+    <a class="cl-text-white navbar-brand cl-text-bold" href="#">
+      Pages
+    </a>
+    <a [routerLink]="['/page-new']" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+      <span class="glyphicon glyphicon-plus"></span>
+    </a>
+  </div>
+</nav>
+
+<div class="container">
+  <ul class="list-group">
+    <li class="list-group-item cl-list-item-borderless">
+      <a [routerLink]="['/page-edit']" >
+        <span class="glyphicon glyphicon-cog pull-right"></span>
+      </a>
+      <a [routerLink]="['../widget/widget-list']">
+        Blog Post
+      </a>
+    </li>
+    <li class="list-group-item cl-list-item-borderless">
+      <a [routerLink]="['/page-edit']">
+        <span class="glyphicon glyphicon-cog pull-right"></span>
+      </a>
+      <a [routerLink]="['../widget/widget-list']">
+        Blogs
+      </a>
+    </li>
+    <li class="list-group-item cl-list-item-borderless">
+      <a [routerLink]="['/page-edit']">
+        <span class="glyphicon glyphicon-cog pull-right"></span>
+      </a>
+      <a [routerLink]="['../widget/widget-list']">
+        Home
+      </a>
+    </li>
+    <li class="list-group-item cl-list-item-borderless">
+      <a [routerLink]="['/page-edit']">
+        <span class="glyphicon glyphicon-cog pull-right"></span>
+      </a>
+      <a [routerLink]="['../widget/widget-list']">
+        About
+      </a>
+    </li>
+    <li class="list-group-item cl-list-item-borderless">
+      <a [routerLink]="['/page-edit']">
+        <span class="glyphicon glyphicon-cog pull-right"></span>
+      </a>
+      <a [routerLink]="['../widget/widget-list']">
+        Contact Us
+      </a>
+    </li>
+  </ul>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container-fluid">
+    <a [routerLink]="['../user/profile']" class="navbar-link navbar-text pull-right cl-icon-padding">
+      <span class="cl-text-blue glyphicon glyphicon-user"></span>
+    </a>
+  </div>
+</nav>

@@ -1,0 +1,36 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-text pull-left widgetsNavBar">
+      <a class="navbar-link" [routerLink]="['/page-list']">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+    </div>
+    <a class="cl-text-white navbar-brand cl-text-bold" href="#">
+      New Page
+    </a>
+    <a [routerLink]="['/page-list']" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+      <span class="glyphicon glyphicon-ok"></span>
+    </a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <form class="cl-form-bottom-padding">
+    <label for="name">Name</label>
+    <input class="form-control" placeholder="Page Name" id="name"/>
+
+    <label for="title">Title</label>
+    <input class="form-control" placeholder="Page Title" id="title"/>
+
+  </form>
+
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container-fluid">
+    <a [routerLink]="['../user/profile']" class="navbar-link navbar-text pull-right cl-icon-padding">
+      <span class="cl-text-blue glyphicon glyphicon-user"></span>
+    </a>
+  </div>
+</nav>
