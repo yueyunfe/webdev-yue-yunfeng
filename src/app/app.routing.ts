@@ -36,4 +36,4 @@ const APP_ROUTES: Routes = [
   { path: 'user/:uid/website/:wid/page/:pid/widget/:wgid', component: WidgetEditComponent}
 ];
 
-export const Routing: ModuleWithProviders = RouterModule.forRoot(APP_ROUTES);
+export const routing: ModuleWithProviders = RouterModule.forRoot(APP_ROUTES);

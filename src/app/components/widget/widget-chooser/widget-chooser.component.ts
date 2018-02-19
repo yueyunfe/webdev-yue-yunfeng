@@ -6,7 +6,7 @@ import {ActivatedRoute, Params} from '@angular/router';
   templateUrl: './widget-choooser.component.html',
   styleUrls: ['./widget-choooser.component.css']
 })
-export class WidgetChoooserComponent implements OnInit {
+export class WidgetChooserComponent implements OnInit {
 
   userId: string;
   widgetsChooser = ['Header', 'Label', 'HTML', 'Text Input', 'Link', 'Button', 'Image', 'Youtube', 'Data Table', 'Repeater'];

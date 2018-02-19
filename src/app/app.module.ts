@@ -25,8 +25,7 @@ import { WidgetYoutubeComponent } from './components/widget/widget-edit/widget-y
 
 
 
-import { Routing } from './app.routing';
-import {routing} from '../../routing';
+import { routing } from './app.routing';
 import {UserService} from './services/user.service.client';
 import {PageService} from './services/page.service.client';
 import {WebsiteService} from './services/website.service.client';
