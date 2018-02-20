@@ -6,7 +6,7 @@ import {WidgetService} from '../../../services/widget.service.client';
 @Component({
   selector: 'app-widget-edit',
   templateUrl: './widget-edit.component.html',
-  styleUrls: ['./widget-edit.component.css']
+  styleUrls: ['../../../app.component.css']
 })
 export class WidgetEditComponent implements OnInit {
 
@@ -22,4 +22,5 @@ export class WidgetEditComponent implements OnInit {
       }
     );
   }
+
 }

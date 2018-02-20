@@ -8,7 +8,7 @@ import {PageService} from '../../../services/page.service.client';
 @Component({
   selector: 'app-widget-list',
   templateUrl: './widget-list.component.html',
-  styleUrls: ['./widget-list.component.css']
+  styleUrls: ['../../../app.component.css']
 })
 export class WidgetListComponent implements OnInit {
 

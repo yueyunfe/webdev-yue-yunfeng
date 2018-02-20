@@ -4,7 +4,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 @Component({
   selector: 'app-widget-chooser',
   templateUrl: './widget-chooser.component.html',
-  styleUrls: ['./widget-chooser.component.css']
+  styleUrls: ['../../../app.component.css']
 })
 export class WidgetChooserComponent implements OnInit {
 
@@ -18,4 +18,5 @@ export class WidgetChooserComponent implements OnInit {
       }
     );
   }
+
 }

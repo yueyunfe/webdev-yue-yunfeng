@@ -7,7 +7,7 @@ import {NgForm} from '@angular/forms';
 @Component({
   selector: 'app-website-edit',
   templateUrl: './website-edit.component.html',
-  styleUrls: ['./website-edit.component.css']
+  styleUrls: ['../../../app.component.css']
 })
 export class WebsiteEditComponent implements OnInit {
   id: string;
@@ -34,6 +34,6 @@ export class WebsiteEditComponent implements OnInit {
 
   deleteWeb() {
     this.websiteService.deleteWebsite(this.id);
-    this.router.navigate(['../'],{relativeTo: this.activatedRoute});
+    this.router.navigate(['../'], {relativeTo: this.activatedRoute});
   }
 }

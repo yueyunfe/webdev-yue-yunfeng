@@ -7,7 +7,7 @@ import {WidgetService} from '../../../../services/widget.service.client';
 @Component({
   selector: 'app-widget-image',
   templateUrl: './widget-image.component.html',
-  styleUrls: ['./widget-image.component.css']
+  styleUrls: ['../../../../app.component.css']
 })
 export class WidgetImageComponent implements OnInit {
   @Input() widget: Widget;

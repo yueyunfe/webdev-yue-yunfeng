@@ -6,7 +6,7 @@ import {Website} from '../../../model/website.model';
 @Component({
   selector: 'app-website-list',
   templateUrl: './website-list.component.html',
-  styleUrls: ['./website-list.component.css']
+  styleUrls: ['../../../app.component.css']
 })
 export class WebsiteListComponent implements OnInit {
   id: string;
@@ -23,6 +23,6 @@ export class WebsiteListComponent implements OnInit {
   }
 
   clickPage(website: Website) {
-    this.router.navigate(['/user', this.id, 'website', website.id, 'page']);
+    this.router.navigate(['user', this.id, 'website', website.id, 'page']);
   }
 }

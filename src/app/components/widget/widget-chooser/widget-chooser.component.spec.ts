@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WidgetChooserComponent } from './widget-chooser.component';
+import { WidgetChoooserComponent } from './widget-chooser.component';
 
 describe('WidgetChooserComponent', () => {
-  let component: WidgetChooserComponent;
-  let fixture: ComponentFixture<WidgetChooserComponent>;
+  let component: WidgetChoooserComponent;
+  let fixture: ComponentFixture<WidgetChoooserComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WidgetChooserComponent ]
+      declarations: [ WidgetChoooserComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WidgetChooserComponent);
+    fixture = TestBed.createComponent(WidgetChoooserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

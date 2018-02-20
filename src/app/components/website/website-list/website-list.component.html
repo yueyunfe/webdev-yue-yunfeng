@@ -1,28 +1,35 @@
-<nav class="navbar bg-primary navbar-fixed-top">
-  <div class="container-fluid ">
-
-
-    <a routerLink="../" class="navbar-text pull-left"><span class="glyphicon glyphicon-menu-left css-text-white "></span></a>
-
-    <a class="navbar-brand css-text-white " routerLink="./">Websites</a>
-
-    <a routerLink="new" class="pull-right navbar-text" ><span class="glyphicon glyphicon-plus css-text-white"></span></a>
+<nav class="navbar navbar-fixed-top cl-blue-navbar">
+  <div class="container-fluid">
+    <div class="navbar-text pull-left widgetsNavBar">
+      <a class="cl-text-white" routerLink="../">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </a>
+    </div>
+    <a class="cl-text-white navbar-brand cl-text-bold" routerLink="./">
+      Websites
+    </a>
+    <a routerLink="new" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+      <span class="glyphicon glyphicon-plus"></span>
+    </a>
   </div>
 </nav>
 
 <div class="container">
-  <ul class="list-group cl-list-group-borderless">
+  <ul class="list-group">
     <li class="list-group-item cl-list-item-borderless" *ngFor="let website of websiteList">
-      <a [routerLink]="website.id" ><span class="glyphicon glyphicon-cog pull-right"></span></a>
+      <a [routerLink]="website.id">
+        <span class="glyphicon glyphicon-cog pull-right"></span>
+      </a>
       <a (click)="clickPage(website)">{{website.name}}</a>
     </li>
   </ul>
 </div>
 
-<nav class="navbar bg-primary navbar-fixed-bottom">
-  <div class="container-fluid ">
-
-    <a [routerLink]="['/user',id]" class="navbar-text pull-right" ><span class="glyphicon glyphicon-user css-text-white"></span></a>
-
+<nav class="navbar navbar-fixed-bottom cl-blue-navbar">
+  <div class="container-fluid">
+    <a [routerLink]="['/user',id]" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
+            <span class="glyphicon glyphicon-user">
+            </span>
+    </a>
   </div>
 </nav>

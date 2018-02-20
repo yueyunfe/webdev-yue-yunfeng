@@ -7,7 +7,7 @@ import {NgForm} from '@angular/forms';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['../../../app.component.css']
 })
 export class ProfileComponent implements OnInit {
   id: string;
@@ -30,7 +30,6 @@ export class ProfileComponent implements OnInit {
 
   toWebsite() {
     this.router.navigate(['website'], {relativeTo: this.route});
-    // this.router.navigate(['user', this.id, 'website']);
   }
 
   save() {

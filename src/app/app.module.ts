@@ -30,6 +30,14 @@ import {UserService} from './services/user.service.client';
 import {PageService} from './services/page.service.client';
 import {WebsiteService} from './services/website.service.client';
 import {WidgetService} from './services/widget.service.client';
+import {HeadingComponent} from './components/widget/widget-list/heading/heading.component';
+import {ImageComponent} from './components/widget/widget-list/image/image.component';
+import {YoutubeComponent} from './components/widget/widget-list/youtube/youtube.component';
+import {HtmlComponent} from './components/widget/widget-list/html/html.component';
+import {NewHeadingComponent} from './components/widget/widget-chooser/widget-new/new-heading/new-heading.component';
+import {NewImageComponent} from './components/widget/widget-chooser/widget-new/new-image/new-image.component';
+import {NewYoutubeComponent} from './components/widget/widget-chooser/widget-new/new-youtube/new-youtube.component';
+import {WidgetNewComponent} from './components/widget/widget-chooser/widget-new/widget-new.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +57,14 @@ import {WidgetService} from './services/widget.service.client';
     WidgetYoutubeComponent,
     WebsiteNewComponent,
     WebsiteEditComponent,
+    HeadingComponent,
+    ImageComponent,
+    YoutubeComponent,
+    HtmlComponent,
+    NewHeadingComponent,
+    NewImageComponent,
+    NewYoutubeComponent,
+    WidgetNewComponent
   ],
   imports: [
     BrowserModule,
