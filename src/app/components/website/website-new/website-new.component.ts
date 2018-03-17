@@ -1,31 +1,48 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {WebsiteService} from '../../../services/website.service.client';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { WebsiteService } from '../../../services/website.service.client';
+import { Website } from '../../../models/website.model.client'
 
 @Component({
   selector: 'app-website-new',
   templateUrl: './website-new.component.html',
-  styleUrls: ['../../../app.component.css']
+  styleUrls: ['./website-new.component.css']
 })
 export class WebsiteNewComponent implements OnInit {
 
-  @ViewChild('newWebForm') newWebForm: NgForm;
-  constructor(private activatedRoute: ActivatedRoute, private webService: WebsiteService, private router: Router) { }
+  userId: String;
+  websites: Website[];
+  newWebsite: Website = {_id:"", name:"", developerId:"", description:""};
 
-  developerId: string;
+  constructor(private websiteService: WebsiteService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router) { }
+
   ngOnInit() {
     this.activatedRoute.params.subscribe(
-      (param: Params) => {
-        this.developerId = param.uid;
+      (params: any) => {
+        this.userId = params.uid;
+        this.websiteService.findWebsitesByUser(this.userId).subscribe(
+          (websites: Website[]) => {
+            this.websites = websites;
+          }
+        );
       }
     );
   }
-  createWeb() {
-    const name = this.newWebForm.value.webName;
-    const description = this.newWebForm.value.description;
-    this.webService.createWebsite(this.developerId, name, description);
-    this.router.navigate(['user', this.developerId, 'website']);
-  }
 
+  createWebsite(website) {
+    if (website.name.trim() != "" && website.description.trim() != "") {
+      this.websiteService.createWebsite(this.userId, website).subscribe(
+        (website: Website) => {
+          const url: any = '/user/' + this.userId + '/website';
+          this.router.navigate([url]);
+        },
+        (error: any) => {
+          // Place an error message here
+        }
+      );
+    }
+  }
 }

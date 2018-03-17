@@ -1,32 +1,55 @@
 import { Component, OnInit } from '@angular/core';
-import {Page} from '../../../model/page.model';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {PageService} from '../../../services/page.service.client';
+import { ActivatedRoute } from '@angular/router';
+
+import { PageService } from '../../../services/page.service.client';
+import { Page } from '../../../models/page.model.client';
+import { UserService } from '../../../services/user.service.client';
+import { WebsiteService } from '../../../services/website.service.client';
+import { Website } from '../../../models/website.model.client';
 
 @Component({
   selector: 'app-page-list',
   templateUrl: './page-list.component.html',
-  styleUrls: ['../../../app.component.css']
+  styleUrls: ['./page-list.component.css']
 })
 export class PageListComponent implements OnInit {
 
-  userId: string;
-  webId: string;
+  userId: String;
+  websiteId: String;
   pages: Page[];
-  constructor(private activatedRoute: ActivatedRoute, private pageService: PageService, private router: Router) { }
+
+  constructor(
+    private pageService: PageService,
+    private userService: UserService,
+    private websiteService: WebsiteService,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(
-      (param: Params) => {
-        this.userId = param.uid;
-        this.webId = param.wid;
-        this.pages = this.pageService.findPageByWebsiteId(this.webId);
-        console.log(this.pages);
+      params => {
+        this.websiteService.findWebsiteById(params.wid).subscribe(
+          (website: Website) => {
+            if (website.developerId === params.uid) {
+              this.websiteId = params.wid;
+              this.userId = params.uid;
+              this.pageService.findPageByWebsiteId(this.websiteId).subscribe(
+                (pages: Page[]) => {
+                  this.pages = pages;
+                },
+                (error: any) => {
+                  console.log(error);
+                }
+              );
+            } else {
+              console.log("User ID does not match.");
+            }
+          },
+          (error: any) => {
+            console.log(error);
+          }
+        )
       }
     );
   }
-
-  // clickPage(page: Page) {
-  //   this.router.navigate([page.id, 'widget'], {relativeTo: this.activatedRoute});
-  // }
 }

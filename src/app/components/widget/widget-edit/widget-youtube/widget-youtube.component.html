@@ -1,49 +1,37 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid ">
-
-
-    <a [routerLink]="['../']" class="navbar-text pull-left"><span class="glyphicon glyphicon-menu-left"></span></a>
-
-
-    <a class="navbar-brand " [routerLink]="['./']">Widgets Edit</a>
-
-    <!--<a (click)="save()" class="navbar-text pull-right"><span class="glyphicon glyphicon-ok"></span></a>-->
-    <a (click)="save()" class=" pull-right navbar-text" ><span class="glyphicon glyphicon-ok"></span></a>
+<nav class="navbar navbar-fixed-top navbar-light bg-secondary">
+  <a class="btn navbar-brand" routerLink="/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget">
+    <span class="glyphicon glyphicon-chevron-left text-dark"></span>
+  </a>
+  <div class="navbar-brand font-weight-bold">
+    Widget Edit
   </div>
+  <a class="btn navbar-brand pull-right" (click)="updateWidget(widget)">
+    <span class="glyphicon glyphicon-ok text-dark"></span>
+  </a>
 </nav>
-
-<div class="container">
-  <form  #widgetForm="ngForm">
+<div class="container-fluid cl-body-padding">
+  <form>
     <div class="form-group">
-      <label for="name">Name</label>
-      <input class="form-control" type="text" placeholder="name (but in this project, it will never be store)" id="name" >
+      <label for="youtube-name">Name</label>
+      <input type="text" class="form-control" name="youtube-name" placeholder="Name">
     </div>
     <div class="form-group">
-      <label for="text">Text</label>
-      <input class="form-control" type="text" [(ngModel)]="widget.text" name="widgetText" id="text">
+      <label for="youtube-text">Text</label>
+      <input type="text" class="form-control" name="youtube-text" placeholder="Text">
     </div>
     <div class="form-group">
       <label for="url">URL</label>
-      <input class="form-control" type="text" [(ngModel)]="widget.url" name="url" id="url">
+      <input [(ngModel)]="widget.url" type="text" class="form-control" name="url" placeholder="YouTube URL">
     </div>
     <div class="form-group">
       <label for="width">Width</label>
-      <input class="form-control" type="text" [(ngModel)]="widget.width" name="width"  id="width">
-    </div>
-    <div class="form-group">
-      <button class="btn btn-danger form-control" type="button" (click)="deleteWidget()">Delete</button>
+      <input [(ngModel)]="width" type="text" class="form-control" name="width" placeholder="100%">
     </div>
   </form>
-
+  <a (click)="deleteWidget()" class="btn btn-block btn-danger">Delete</a>
 </div>
-
-
-
-
-<nav class="navbar navbar-default navbar-fixed-bottom">
-  <div class="container-fluid ">
-
-    <a [routerLink]="['/user',userId]" class="navbar-text pull-right"><span class="glyphicon glyphicon-user"></span></a>
-
-  </div>
+<nav class="navbar navbar-fixed-bottom navbar-light bg-secondary">
+  <a class="navbar-brand pull-right" [routerLink]="['/profile']">
+    <span class="glyphicon glyphicon-user text-primary"></span>
+  </a>
 </nav>

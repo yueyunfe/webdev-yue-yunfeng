@@ -1,52 +1,98 @@
-
 import { Injectable } from '@angular/core';
-import {Widget} from '../model/widget.model';
+import { Http, RequestOptions, Response } from '@angular/http';
+import 'rxjs/Rx';
+import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
+import { Widget } from '../models/widget.model.client';
 
-
+// import { Widget } from '../models/widget.model.client';
 
 @Injectable()
 export class WidgetService {
 
-  widgets =   [
-    new Widget('123', 'HEADING', '321', '2', 'GIZMODO', '100%', 'url'),
-    new Widget('234', 'HEADING', '321', '4', 'Lorem ipsum', '100%', 'url'),
-    new Widget('345', 'IMAGE', '321', '4', 'text', '100%', 'http://lorempixel.com/400/200/'),
-    new Widget('456', 'HTML', '321', '4', '<p>Lorem ipsum</p>', '100%', 'url'),
-    new Widget('567', 'HEADING', '321', '4', 'Lorem ipsum', '100%', 'http://lorempixel.com/400/200/'),
-    new Widget('678', 'YOUTUBE', '321', '4', 'text', '100%', 'https://www.youtube.com/embed/4jtVx4_QpKA'),
-    new Widget('789', 'HTML', '321', '4', '<p>Lorem ipsum</p>', '100%', 'url'),
-  ];
+    constructor(private http: Http) { }
 
-  constructor() { }
+    baseUrl = environment.baseUrl;
 
-  createWidget(widgetType: string, pageId: string, size: string, text: string, width: string, url: string) {
-    // actually this should done in the server side
-    const id = Math.random().toString();
-    this.widgets.push(new Widget(id, widgetType, pageId, size, text, width, url));
-  }
+    // widgets: Widget[] = [
+    //     { _id: "123", widgetType: "HEADER", pageId: "321", size: "2", text: "GIZMODO", url: "", width: "" },
+    //     { _id: "234", widgetType: "HEADER", pageId: "321", size: "4", text: "Lorem ipsum", url: "", width: "" },
+    //     { _id: "345", widgetType: "IMAGE", pageId: "321", size: "", text: "", width: "100%", url: "http://lorempixel.com/400/200/" },
+    //     { _id: "456", widgetType: "HTML", pageId: "321", size: "", text: "<p>Lorem ipsum</p>", url: "", width: "" },
+    //     { _id: "567", widgetType: "HEADER", pageId: "321", size: "4", text: "Lorem ipsum", url: "", width: "" },
+    //     { _id: "678", widgetType: "YOUTUBE", pageId: "321", size: "", text: "", url: "https://youtu.be/AM2Ivdi9c4E", width: "100%" },
+    //     { _id: "789", widgetType: "HTML", pageId: "321", size: "<p>Lorem ipsum</p>", text: "", url: "", width: "" }
+    // ];
 
-  findWidgetByPageId(pageId: string) {
-    const pageWidget = [];
-    this.widgets.forEach(function (widget) {
-      if (widget.pageId === pageId) {
-        pageWidget.push(widget);
-      }
-    });
-    return pageWidget;
-  }
+    // api = {
+    //     'createWidget': this.createWidget,
+    //     'findWidgetsByPageId': this.findWidgetsByPageId,
+    //     'findWidgetById': this.findWidgetById,
+    //     'updateWidget': this.updateWidget,
+    //     'deleteWidget': this.deleteWidget
+    // };
 
-  findWidgetById(widgetId: string) {
-    const widgetFound = this.widgets.find(widget =>  widget.id === widgetId);
-    return new Widget(widgetFound.id, widgetFound.widgetType, widgetFound.pageId, widgetFound.size,
-      widgetFound.text, widgetFound.width, widgetFound.url);
-  }
+    createWidget(pageId: String, widget: Widget) {
+        const url = this.baseUrl + "/api/page/" + pageId + "/widget";
+        return this.http.post(url, widget).map(
+            (res: Response) => {
+                return res.json();
+            }
+        );
+    }
 
-  updateWidget(widgetId: string, newWidget: Widget) {
-    const index = this.widgets.findIndex(widget => widget.id === widgetId);
-    this.widgets[index] = newWidget;
-  }
-  deleteWidget(widgetId: string) {
-    const index = this.widgets.findIndex(widget => widget.id === widgetId);
-    this.widgets.splice(index, 1);
-  }
+    findImage(imageName: String) {
+        const url = this.baseUrl + "/api/image/" + imageName;
+        return this.http.get(url).map(
+            (res: Response) => {
+                return res.json();
+            }
+        );
+    }
+
+    findWidgetsByPageId(pageId: String) {
+        const url = this.baseUrl + "/api/page/" + pageId + "/widget";
+        return this.http.get(url).map(
+            (res: Response) => {
+                return res.json();
+            }
+        );
+    }
+
+    findWidgetById(widgetId: String) {
+        const url = this.baseUrl + "/api/widget/" + widgetId;
+        return this.http.get(url).map(
+            (res: Response) => {
+                return res.json();
+            }
+        );
+    }
+
+    updateWidget(widgetId: String, widget: Widget) {
+        const url = this.baseUrl + "/api/widget/" + widgetId;
+        return this.http.put(url, widget).map(
+            (res: Response) => {
+                return res.json();
+            }
+        );
+    }
+
+    deleteWidget(widgetId: String) {
+        const url = this.baseUrl + "/api/widget/" + widgetId;
+        return this.http.delete(url).map(
+            (res: Response) => {
+                return res.json();
+            }
+        );
+    }
+
+    reorderWidgets(startIndex, endIndex, pageId) {
+        const url = this.baseUrl + '/api/page/' + pageId + '/widget?initial=' + startIndex + '&final=' + endIndex;
+        return this.http.put(url, '').map(
+            (res: Response) => {
+                const data = res;
+                return data;
+            }
+        );
+    }
 }

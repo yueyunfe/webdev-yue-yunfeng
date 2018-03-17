@@ -1,50 +1,78 @@
 import { Injectable } from '@angular/core';
-import {Website} from '../model/website.model';
+import { Http, RequestOptions, Response } from '@angular/http';
+import 'rxjs/Rx';
+import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
+import { Website } from '../models/website.model.client';
 
 @Injectable()
 export class WebsiteService {
 
+    constructor(private http: Http) { }
 
-  constructor() { }
+    baseUrl = environment.baseUrl;
 
-  websites: Website[] = [
-    new Website('456', 'Gizmode', '456', 'Lorem'),
-    new Website('123', 'Facebook', '456', 'Lorem'),
-    new Website('234', 'Tweeter', '456', 'Lorem'),
-    new Website('890', 'Go', '123', 'Lorem'),
-    new Website('567', 'Tic Tac Toe', '123', 'Lorem'),
-    new Website('678', 'Checkers', '123', 'Lorem'),
-    new Website('789', 'Chess', '234', 'Lorem')
-  ];
+    // websites: Website[] = [
+    //     { _id: "123", name: "Facebook", developerId: "456", description: "Lorem" },
+    //     { _id: "234", name: "Tweeter", developerId: "456", description: "Lorem" },
+    //     { _id: "456", name: "Gizmodo", developerId: "456", description: "Lorem" },
+    //     { _id: "890", name: "Go", developerId: "123", description: "Lorem" },
+    //     { _id: "567", name: "Tic Tac Toe", developerId: "123", description: "Lorem" },
+    //     { _id: "678", name: "Checkers", developerId: "123", description: "Lorem" },
+    //     { _id: "789", name: "Chess", developerId: "234", description: "Lorem" }
+    // ];
 
+    // api = {
+    //     'createWebsite': this.createWebsite,
+    //     'findWebsitesByUser': this.findWebsitesByUser,
+    //     'findWebsiteById': this.findWebsiteById,
+    //     'updateWebsite': this.updateWebsite,
+    //     'deleteWebsite': this.deleteWebsite
+    // };
 
+    createWebsite(userId: String, website: Website) {
+        const url = this.baseUrl + '/api/user/' + userId + '/website';
+        return this.http.post(url, website).map(
+            (res: Response) => {
+                return res.json();
+            }
+        );
+    }
 
-  createWebsite(userId: string, name: string, description: string) {
-    const id = Math.random().toString();
-    this.websites.push(new Website(id, name, userId, description));
-  }
+    findWebsitesByUser(userId: String) {
+        const url = this.baseUrl + '/api/user/' + userId + '/website';
+        return this.http.get(url).map(
+            (res: Response) => {
+                return res.json();
+            }
+        );
+    }
 
-  findWebsitesByUser(userId: string) {
-    const userWeb = [];
-    this.websites.forEach(function (website) {
-      if (website.developerId === userId) {
-        userWeb.push(website);
-      }
-    });
-    return userWeb;
-  }
-  findWebsiteById(websiteId: string) {
-    const web = this.websites.find(website => website.id === websiteId);
-    return new Website(web.id, web.name, web.developerId, web.description);
-  }
-  updateWebsite(websiteId: string, newWebsite: Website) {
-    const index: number = this.websites.findIndex(website => website.id === websiteId);
-    this.websites[index] = newWebsite;
-  }
-  deleteWebsite(websiteId: string) {
-    const index: number = this.websites.findIndex(website => website.id === websiteId);
-    this.websites.splice(index, 1);
-  }
+    findWebsiteById(websiteId: String) {
+        const url = this.baseUrl + '/api/website/' + websiteId;
+        return this.http.get(url).map(
+            (res: Response) => {
+                return res.json();
+            }
+        );
+    }
 
+    updateWebsite(websiteId: String, website: Website) {
+        const url = this.baseUrl + '/api/website/' + websiteId;
+        return this.http.put(url, website).map(
+            (res: Response) => {
+                return res.json();
+            }
+        );
+    }
+
+    deleteWebsite(websiteId: String) {
+        const url = this.baseUrl + '/api/website/' + websiteId;
+        return this.http.delete(url).map(
+            (res: Response) => {
+                return res.json();
+            }
+        );
+    }
 }

@@ -1,35 +1,26 @@
-<nav class="navbar navbar-fixed-top cl-blue-navbar">
-  <div class="container-fluid">
-    <div class="navbar-text pull-left widgetsNavBar">
-      <a class="cl-text-white" routerLink="../">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-      </a>
-    </div>
-    <a class="cl-text-white navbar-brand cl-text-bold" routerLink="./">
-      Websites
-    </a>
-    <a routerLink="new" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
-      <span class="glyphicon glyphicon-plus"></span>
-    </a>
+<nav class="navbar navbar-fixed-top navbar-light bg-primary">
+  <a class="navbar-brand" routerLink="/user/{{userId}}">
+    <span class="glyphicon glyphicon-chevron-left text-white"></span>
+  </a>
+  <div class="navbar-brand text-white font-weight-bold">
+    Websites
   </div>
+  <a class="navbar-brand pull-right" routerLink="/user/{{userId}}/website/new">
+    <span class="glyphicon glyphicon-plus text-white"></span>
+  </a>
 </nav>
+<div class="container-fluid cl-body-padding">
 
-<div class="container">
-  <ul class="list-group">
-    <li class="list-group-item cl-list-item-borderless" *ngFor="let website of websiteList">
-      <a [routerLink]="website.id">
-        <span class="glyphicon glyphicon-cog pull-right"></span>
-      </a>
-      <a (click)="clickPage(website)">{{website.name}}</a>
-    </li>
-  </ul>
-</div>
-
-<nav class="navbar navbar-fixed-bottom cl-blue-navbar">
-  <div class="container-fluid">
-    <a [routerLink]="['/user',id]" class="navbar-link navbar-text pull-right cl-text-white cl-icon-padding">
-            <span class="glyphicon glyphicon-user">
-            </span>
+  <div class="row extra-padding" *ngFor="let website of websites">
+    <a class="extra-left-padding" routerLink="/user/{{userId}}/website/{{website._id}}/page">{{website.name}}</a>
+    <a class="pull-right" routerLink="/user/{{userId}}/website/{{website._id}}">
+      <i class="glyphicon glyphicon-cog text-primary extra-right-padding"></i>
     </a>
   </div>
+  
+</div>
+<nav class="navbar navbar-fixed-bottom navbar-light bg-primary">
+  <a class="navbar-brand pull-right" routerLink="/user/{{userId}}">
+    <span class="glyphicon glyphicon-user text-white"></span>
+  </a>
 </nav>

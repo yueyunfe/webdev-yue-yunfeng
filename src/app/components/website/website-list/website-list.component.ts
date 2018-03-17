@@ -1,28 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import {WebsiteService} from '../../../services/website.service.client';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Website} from '../../../model/website.model';
+import { ActivatedRoute } from '@angular/router';
+
+import { WebsiteService } from '../../../services/website.service.client';
+import { Website } from '../../../models/website.model.client'
 
 @Component({
   selector: 'app-website-list',
   templateUrl: './website-list.component.html',
-  styleUrls: ['../../../app.component.css']
+  styleUrls: ['./website-list.component.css']
 })
 export class WebsiteListComponent implements OnInit {
-  id: string;
-  websiteList: Website[];
-  constructor(private websiteService: WebsiteService, private activatedRoute: ActivatedRoute, private router: Router) { }
+
+  userId: String;
+  websites: Website[];
+
+  constructor(private websiteService: WebsiteService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(
-      (param: Params) => {
-        this.id = param.uid;
-        this.websiteList = this.websiteService.findWebsitesByUser(this.id);
+      (params: any) => {
+        this.userId = params.uid;
+        return this.websiteService.findWebsitesByUser(this.userId).subscribe(
+          (websites: Website[]) => {
+            this.websites = websites;
+          }
+        );
       }
     );
-  }
-
-  clickPage(website: Website) {
-    this.router.navigate(['user', this.id, 'website', website.id, 'page']);
   }
 }

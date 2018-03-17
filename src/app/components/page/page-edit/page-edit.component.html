@@ -1,65 +1,29 @@
-<div class="container-fluid">
-
-
-  <div class="col-xs-4 hidden-xs">
-    <div class="container-fluid">
-      <app-page-list></app-page-list>
-    </div>
+<nav class="navbar navbar-fixed-top navbar-light bg-secondary">
+  <a class="navbar-brand" routerLink="/user/{{userId}}/website/{{websiteId}}/page">
+    <span class="glyphicon glyphicon-chevron-left text-dark"></span>
+  </a>
+  <div class="navbar-brand font-weight-bold">
+    Edit Page
   </div>
-
-  <div class="col-sm-8 div-border">
-    <div class="container-fluid">
-      <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="row">
-
-          <div class="col-xs-4 hidden-xs">
-            <div class="container-fluid">
-              <a routerLink="../" class="navbar-text pull-left"><span class="glyphicon glyphicon-menu-left "></span></a>
-              <a class="navbar-brand  " routerLink="./">Pages</a>
-              <a [routerLink]="['/user',userId,'website',page.websiteId,'page','new']" class="pull-right navbar-text" ><span class="glyphicon glyphicon-plus"></span></a>
-            </div>
-          </div>
-
-          <div class="col-sm-8">
-            <div class="container-fluid">
-              <a class="navbar-brand" routerLink="./">Edit Pages</a>
-              <a (click)="editPage()" class=" pull-right navbar-text" ><span class="glyphicon glyphicon-ok"></span></a>
-            </div>
-
-          </div>
-        </div>
-
-      </nav>
-
-
-
-      <div class="container-fluid">
-        <form #editPageForm="ngForm">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" [(ngModel)]="page.name" name="pageName" class="form-control" id="name">
-          </div>
-          <div class="form-group">
-            <label for="title">Description</label>
-            <input type="text" [(ngModel)]="page.title" name="pageTitle" class="form-control" id="title">
-          </div>
-          <div class="form-group">
-            <button (click)="deletePage()" class="btn btn-danger form-control" type="button">Delete</button>
-          </div>
-        </form>
-      </div>
-
+  <a class="btn navbar-brand pull-right" (click)="updatePage(updatedPage)">
+    <span class="glyphicon glyphicon-ok text-dark"></span>
+  </a>
+</nav>
+<div class="container-fluid cl-body-padding">
+  <form>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input [(ngModel)]="updatedPage.name" type="text" class="form-control" name="name" placeholder="Page Name">
     </div>
-  </div>
-
-
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input [(ngModel)]="updatedPage.title" type="text" class="form-control" name="title" placeholder="Page Title">
+    </div>
+    <a (click)="deletePage()" class="btn btn-block btn-danger">Delete</a>
+  </form>
 </div>
-
-
-<nav class="navbar navbar-default navbar-fixed-bottom">
-  <div class="container-fluid ">
-
-    <a [routerLink]="['/user',userId]" class="navbar-text pull-right" ><span class="glyphicon glyphicon-user"></span></a>
-
-  </div>
+<nav class="navbar navbar-fixed-bottom navbar-light bg-secondary">
+  <a class="navbar-brand pull-right" routerLink="/user/{{userId}}">
+    <span class="glyphicon glyphicon-user text-primary"></span>
+  </a>
 </nav>
