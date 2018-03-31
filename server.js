@@ -11,7 +11,7 @@ const app = express();
 
 // mongodb://<dbuser>:<dbpassword>@ds115768.mlab.com:15768/heroku_8xzzq2rc
 // var connectionString = 'mongodb://localhost:27017/webdev'; // for local
-var connectionString = 'mongodb://root:password@ds115768.mlab.com:15768/heroku_8xzzq2rc'; // for heroku
+var connectionString = 'mongodb://yueyunfe:123456@ds263837.mlab.com:63837/heroku_0dkpkgg7'; // for heroku
 var mongoose = require("mongoose");
 mongoose.createConnection(connectionString);
 
