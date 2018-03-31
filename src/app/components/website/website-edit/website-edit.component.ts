@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { WebsiteService } from '../../../services/website.service.client';
-import { Website } from '../../../models/website.model.client';
 
 @Component({
   selector: 'app-website-edit',
@@ -13,8 +12,8 @@ export class WebsiteEditComponent implements OnInit {
 
   // properties
   websiteId: String;
-  websites: Website[];
-  updatedWebsite: Website = {_id:"", name:"", developerId:"", description:""};
+  websites: any[];
+  updatedWebsite: any = {};
   name: String;
   developerId: String;
   description: String;
@@ -27,18 +26,17 @@ export class WebsiteEditComponent implements OnInit {
     this.activatedRoute.params.subscribe(
       params => {
        this.websiteService.findWebsiteById(params.wid).subscribe(
-          (website: Website) => {
+          (website: any) => {
             this.websiteId = website._id;
-            this.developerId = website.developerId;
+            this.developerId = website._user;
             this.updatedWebsite = website;
-            console.log(this.updatedWebsite.name);
           },
           (error: any) => {
             // this is the place to put an error message
           }
         );
        this.websiteService.findWebsitesByUser(params.uid).subscribe(
-          (websites: Website[]) => {
+          (websites: any[]) => {
             this.websites = websites;
           },
           (error: any) => {
@@ -50,9 +48,12 @@ export class WebsiteEditComponent implements OnInit {
   }
 
   updateWebsite(website) {
-    if (website.name.trim() != "" && website.description.trim() != "") {
+    if (website.name != null
+      && website.description != null
+      && website.name.trim() != "" 
+      && website.description.trim() != "") {
       this.websiteService.updateWebsite(this.websiteId, website).subscribe(
-        (website: Website) => {
+        (website: any) => {
           this.updatedWebsite = website;
           let url: any = '/user/' + this.developerId + '/website';
           this.router.navigate([url]);
@@ -65,9 +66,9 @@ export class WebsiteEditComponent implements OnInit {
   }
 
   deleteWebsite() {
-    if (this.websiteId.trim() != "") {
+    if (this.websiteId != null && this.websiteId.trim() != "") {
       this.websiteService.deleteWebsite(this.websiteId).subscribe(
-        (website: Website) => {
+        (website: any) => {
           let url: any = '/user/' + this.developerId + '/website';
           this.router.navigate([url]);
         },

@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { UserService } from '../../../services/user.service.client';
-import { User } from '../../../models/user.model.client';
 
 @Component({
   selector: 'app-register',
@@ -14,10 +13,7 @@ export class RegisterComponent implements OnInit {
 
   @ViewChild('f') registerForm: NgForm;
 
-  user: User = { _id: "", username: "", password: "", firstName: "", lastName: "" };
-  username: String;
-  password: String;
-  verifyPassword: String;
+  user: any = {};
   errorFlag: boolean;
   errorMsg: String;
 
@@ -27,23 +23,27 @@ export class RegisterComponent implements OnInit {
 
   register(username: String, password: String, verifyPassword: String) {
     this.errorFlag = false;
-    if (username.trim() == "") {
+    this.errorMsg = '';
+    if (username == null || username.trim() == "") {
       this.errorMsg = 'Username cannot be empty';
       this.errorFlag = true;
+      return;
     }
-    if (password.trim() == "") {
+    if (password == null || password.trim() == "") {
       this.errorMsg = 'Password cannot be empty';
       this.errorFlag = true;
+      return;
     }
-    if (this.password != this.verifyPassword) {
+    if (verifyPassword == null || password != verifyPassword) {
       this.errorMsg = 'Password and Verify Password do not match.';
       this.errorFlag = true;
+      return;
     }
     if (!this.errorFlag) {
-      this.user.username = this.username;
-      this.user.password = this.password;
+      this.user.username = username;
+      this.user.password = password;
       this.userService.createUser(this.user).subscribe(
-        (user: User) => {
+        (user: any) => {
           this.errorFlag = false;
           this.router.navigate(['/user', user._id]);
         },

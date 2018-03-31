@@ -11,8 +11,8 @@
 </nav>
 
 <div id="sortable" class="cl-body-padding" appSortable (newIndexes)="reorderWidgets($event)">
-  <div *ngFor="let widget of widgets">
-    <div *ngIf="widget.widgetType == 'HEADER'">
+  <div *ngFor="let widget of widgets | orderBy">
+    <div *ngIf="widget.type == 'HEADER'">
       <div class="pull-right">
         <a [routerLink]="['/#']" class="pull-right">
           <span class="glyphicon glyphicon-menu-hamburger"></span>
@@ -22,9 +22,10 @@
         </a>
       </div>
       <h1>{{widget.text}}</h1>
+      <br>
     </div>
 
-    <div *ngIf="widget.widgetType == 'HTML'">
+    <div *ngIf="widget.type == 'HTML'">
       <div class="pull-right">
         <a [routerLink]="['/#']" class="pull-right">
           <span class="glyphicon glyphicon-menu-hamburger"></span>
@@ -34,9 +35,10 @@
         </a>
       </div>
       <h1>Html name: {{widget.name}}</h1>
+      <br>
     </div>
 
-    <div *ngIf="widget.widgetType == 'TEXT'">
+    <div *ngIf="widget.type == 'TEXT'">
       <div class="pull-right">
         <a [routerLink]="['/#']" class="pull-right">
           <span class="glyphicon glyphicon-menu-hamburger"></span>
@@ -46,9 +48,10 @@
         </a>
       </div>
       <h1>Text name: {{widget.name}}</h1>
+      <br>
     </div>
 
-    <div *ngIf="widget.widgetType == 'IMAGE'">
+    <div *ngIf="widget.type == 'IMAGE'">
       <div>
         <a [routerLink]="['/#']" class="pull-right">
           <span class="glyphicon glyphicon-menu-hamburger"></span>
@@ -56,27 +59,15 @@
         <a routerLink="/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}" class="pull-right">
           <span class="glyphicon glyphicon-cog"></span>
         </a>
-        <img class="img-responsive cl-widget-images" src="{{baseUrl}}/api/image/{{widget.url}}" alt="alt" width="widget.width">
+        <!-- <img class="img-responsive cl-widget-images" src="{{baseUrl}}/api/image/{{widget.url}}" alt="alt" width="widget.width"> -->
+        <img class="img-responsive cl-widget-images" src="{{widget.url}}" alt="alt" width="widget.width">
       </div>
       <br>
     </div>
 
-    <!-- <div *ngIf="widget.widgetType == 'IMAGE'">
+    <div class="embed-responsive embed-responsive-16by9 youtube-widget" *ngIf="widget.type == 'YOUTUBE'">
       <div>
-        <a [routerLink]="['/#']" class="pull-right">
-          <span class="glyphicon glyphicon-menu-hamburger"></span>
-        </a>
-        <a routerLink="/user/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}" class="pull-right">
-          <span class="glyphicon glyphicon-cog"></span>
-        </a>
-        <img class="img-responsive cl-widget-images" src="{{widget.url}}" alt="alt" width="{{widget.width}}">
-      </div>
-      <br>
-    </div> -->
-
-    <div class="embed-responsive embed-responsive-16by9" *ngIf="widget.widgetType == 'YOUTUBE'">
-      <div>
-        <iframe width="{{widget.width}}" height="360" [src]="photoURL(widget.url)" frameborder="0" allowfullscreen>
+        <iframe width="{{widget.width}}" height="{{widget.height}}" [src]="photoURL(widget.url)" frameborder="0" allowfullscreen>
         </iframe>
         <a [routerLink]="['/#']" class="pull-right">
           <span class="glyphicon glyphicon-menu-hamburger" style="background-color: white"></span>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 
 import { UserService } from '../../../services/user.service.client';
-import { User } from '../../../models/user.model.client';
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +11,7 @@ import { User } from '../../../models/user.model.client';
 export class ProfileComponent implements OnInit {
 
   // properties
-  user: User = { _id: "", username: "", password: "", firstName: "", lastName: "" };
+  user = {};
   userId: String;
   errorFlag: boolean;
   errorMessage: String;
@@ -27,7 +26,7 @@ export class ProfileComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       this.userId = params.uid;
       return this.userService.findUserById(this.userId).subscribe(
-        (user: User) => {
+        (user: any) => {
           this.user = user;
         },
         (error: any) => {
@@ -40,9 +39,10 @@ export class ProfileComponent implements OnInit {
 
   updateUser(updatedUser) {
     this.userService.updateUser(this.userId, updatedUser).subscribe(
-      (user: User) => {
+      (user: any) => {
         this.errorFlag = false;
         this.user = user;
+        this.ngOnInit();
       },
       (error: any) => {
         this.errorFlag = true;
@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit {
 
   deleteUser() {
     this.userService.deleteUser(this.userId).subscribe(
-      (user: User) => {
+      (user: any) => {
         let url: any = '/login';
         this.router.navigate([url]);
       },

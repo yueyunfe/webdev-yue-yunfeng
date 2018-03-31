@@ -16,16 +16,20 @@
       <input [(ngModel)]="user.username" type="text" name="username" placeholder="jannunzi" class="form-control">
     </div>
     <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="jannunzi@gmail.com" class="form-control">
-    </div>
-    <div class="form-group">
       <label for="firstName">First Name</label>
       <input [(ngModel)]="user.firstName" type="text" name="firstName" placeholder="Jose" class="form-control">
     </div>
     <div class="form-group">
       <label for="lastName">Last Name</label>
       <input [(ngModel)]="user.lastName" type="text" name="lastName" placeholder="Annunziato" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input [(ngModel)]="user.email" type="email" name="email" placeholder="jannunzi@gmail.com" class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone</label>
+      <input [(ngModel)]="user.phone" type="tel" name="phone" placeholder="2061234567" class="form-control">
     </div>
     <div class="form-group">
       <a routerLink="/user/{{user._id}}/website" class="btn btn-primary btn-block">Websites</a>

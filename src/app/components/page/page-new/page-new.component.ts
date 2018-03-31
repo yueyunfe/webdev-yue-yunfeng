@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PageService } from '../../../services/page.service.client';
-import { Page } from '../../../models/page.model.client';
 import { WebsiteService } from '../../../services/website.service.client';
 import { UserService } from '../../../services/user.service.client';
-import { Website } from '../../../models/website.model.client';
 
 @Component({
   selector: 'app-page-new',
@@ -16,7 +14,7 @@ export class PageNewComponent implements OnInit {
 
   userId: String;
   websiteId: String;
-  newPage: Page = { _id: "", name: "", websiteId: "", title: "" };
+  newPage: any = {};
 
   constructor(
     private pageService: PageService,
@@ -30,8 +28,8 @@ export class PageNewComponent implements OnInit {
     this.activatedRoute.params.subscribe(
       params => {
         this.websiteService.findWebsiteById(params.wid).subscribe(
-          (website: Website) => {
-            if (website.developerId === params.uid) {
+          (website: any) => {
+            if (website._user === params.uid) {
               this.websiteId = params.wid;
               this.userId = params.uid;
             } else {
@@ -47,16 +45,16 @@ export class PageNewComponent implements OnInit {
   }
 
   createPage(page) {
-    if (page.name.trim() == "") {
+    if (page.name == null || page.name.trim() == "") {
       console.log("Name cannot be empty.");
       return;
     }
-    if (page.title.trim() == "") {
+    if (page.title == null || page.title.trim() == "") {
       console.log("Title cannot be empty.");
       return;
     }
     this.pageService.createPage(this.websiteId, page).subscribe(
-      (page: Page) => {
+      (page: any) => {
         let url: any = "/user/" + this.userId + "/website/" + this.websiteId + "/page";
         this.router.navigate([url]);
       }
