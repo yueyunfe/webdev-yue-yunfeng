@@ -8,53 +8,51 @@
       </a>
     </div>
     <div class="navbar-text pull-right">
-      <a class="cl-icon-padding cl-text-black">
-        <button class="glyphicon glyphicon-ok" (click)="f.ngSubmit.emit()" [disabled]="!f.valid">
-        </button>
+      <a (click)="updateWidget(widget)" class="cl-icon-padding cl-text-black">
+          <span class="glyphicon glyphicon-ok">
+          </span>
       </a>
     </div>
-    <a class="navbar-brand cl-text-white cl-text-bold" href="#">
-      Youtube Edit
+    <a class="navbar-brand cl-text-white cl-text-bold" routerLink="/#">
+      Widget Edit
     </a>
   </div>
 </nav>
 
-<div class="container">
-  <form (ngSubmit)="update()" #f="ngForm">
-    <!--<div class="form-group">-->
-      <!--<label for="image-name">Name</label>-->
-      <!--<input type="text" class="form-control" id="image-name" placeholder={{widget.type}}-->
-             <!--ngModel required-->
-             <!--name="headerName" #headerName="ngModel"/>-->
-    <!--</div>-->
+<div class="container-fluid">
+  <form>
     <div class="form-group">
-      <label for="image-text">Text</label>
-      <input type="text" class="form-control" id="image-text" placeholder={{widget.text}}
-             ngModel required
-             name="text" #text="ngModel"/>
+      <label for="youtube-name">Name</label>
+      <input type="text" class="form-control" id="youtube-name" placeholder="Name">
     </div>
     <div class="form-group">
-      <label for="image-URL">URL</label>
-      <input type="text" class="form-control" id="image-URL" placeholder={{widget.url}}
-             ngModel required
-             name="url" #url="ngModel"/>
+      <label for="youtube-text">Text</label>
+      <input type="text" class="form-control" id="youtube-text" placeholder="Text">
     </div>
     <div class="form-group">
-      <label for="image-width">Width</label>
-      <input type="text" class="form-control" id="image-width" placeholder={{widget.width}}
-             ngModel required
-             name="width" #width="ngModel"/>
+      <label for="youtube-URL">URL</label>
+      <input [(ngModel)]="widget.url" type="text" class="form-control" id="youtube-URL" placeholder="URL"
+             [ngModelOptions]="{standalone: true}">
     </div>
-  <button class="btn btn-danger  btn-block" type="button" (click)="delete()">Delete</button>
+    <div class="form-group">
+      <label for="youtube-width">Width</label>
+      <input [(ngModel)]="widget.width" type="text" class="form-control" id="youtube-width" value="100%"
+             [ngModelOptions]="{standalone: true}">
+    </div>
   </form>
+  <a class="btn btn-danger btn-block" (click)="deleteWidget()">Delete</a>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
   <div class="container-fluid row">
     <div class="pull-right navbar-text">
-      <a routerLink="../../../../../.." class="cl-icon-padding">
+
+      <a routerLink="/profile" class="cl-icon-padding">
         <span class="glyphicon glyphicon-user"></span>
       </a>
+
     </div>
   </div>
 </nav>
+
+

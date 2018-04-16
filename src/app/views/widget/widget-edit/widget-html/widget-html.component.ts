@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Widget} from '../../../../models/widget.model.client';
 import {WidgetService} from '../../../../services/widget.service.client';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Widget} from '../../../../models/widget.model.client';
 
 @Component({
   selector: 'app-widget-html',
@@ -9,66 +9,54 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./widget-html.component.css']
 })
 export class WidgetHtmlComponent implements OnInit {
+    widget: any = {};
+    userId: String;
+    websiteId: String;
+    pageId: String;
+    widgetId: String;
 
-  wgid: String;
-  pageID: String;
-  widget: Widget;
+    constructor(
+        private widgetService: WidgetService, private activatedRoute: ActivatedRoute,
+        private router: Router
+    ) { }
 
-  editorContent: String;
-  public editorOptions = {
-    placeholder: 'insert content...'
-  };
+    ngOnInit() {
+        this.activatedRoute.params.subscribe(
+            (params: any) => {
+                this.widgetId = params['wgid'];
+                this.pageId = params['pid'];
+                this.userId = params['uid'];
+                this.websiteId = params['wid'];
+            }
+        );
 
-  constructor(private activatedRoute: ActivatedRoute, private widgetService: WidgetService, private route: Router) { }
-
-  onContentChanged({ quill, html, text }) {
-    // console.log('quill content is changed!', quill, html, text);
-    this.widget.text = html;
-  }
-
-  delete() {
-    if (this.wgid === undefined) {
-      return;
+        // this.widget = this.widgetService.findWidgetById(this.widgetId);
+        this.widgetService.findWidgetById(this.widgetId).subscribe(
+            (widget: any) => {
+                this.widget = widget;
+            }
+        );
     }
-    this.widgetService.deleteWidget(this.wgid).subscribe(
-      () => this.route.navigate(['../'], {relativeTo: this.activatedRoute})
-    );
-  }
 
-  update() {
-    if (this.wgid === undefined) {
-      this.widgetService.createWidget(this.pageID, this.widget).subscribe(
-        (widget: Widget) => {
-          this.widget = widget;
-          this.route.navigate(['../'], {relativeTo: this.activatedRoute});
-        }
-      );
-    } else {
-      this.widgetService.updateWidget(this.wgid, this.widget).subscribe(
-        (widget: Widget) => {
-          this.widget = widget;
-          this.route.navigate(['../'], {relativeTo: this.activatedRoute});
-        }
-      );
+    updateWidget(updatedwidget: Widget) {
+        // this.widgetService.updateWidget(widget._id, widget);
+        // this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId + '/widget']);
+        this.widgetService.updateWidget(this.widgetId, updatedwidget).subscribe(
+            (widget: any) => {
+                const url: any = '/user/website/' + this.websiteId + '/page/' + this.pageId + '/widget';
+                this.router.navigate([url]);
+            }
+        );
     }
-  }
 
-  ngOnInit() {
-    this.activatedRoute.params.subscribe(
-      (params: any) => {
-        this.pageID = params['pid'];
-        this.wgid = params['wgid'];
-        if (this.wgid === undefined) {
-          this.widget = new Widget(undefined, 'HTML', this.pageID, '', '', '', '');
-        } else {
-          this.widgetService.findWidgetById(this.wgid).subscribe(
-            (widget: Widget) => {
-              this.widget = widget;
-              this.editorContent = this.widget.text;
-              console.log(this.editorContent);
-            });
-        }
-      });
-  }
-
+    deleteWidget() {
+        // this.widgetService.deleteWidget(this.widgetId);
+        // this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId + '/widget']);
+        this.widgetService.deleteWidget(this.widgetId).subscribe(
+            (widget: any) => {
+                const url: any = '/user/website/' + this.websiteId + '/page/' + this.pageId + '/widget';
+                this.router.navigate([url]);
+            }
+        );
+    }
 }

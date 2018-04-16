@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Widget} from '../../../models/widget.model.client';
-import {ActivatedRoute} from '@angular/router';
-import {WidgetService} from '../../../services/widget.service.client';
-import {DomSanitizer} from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+import { WidgetService } from '../../../services/widget.service.client';
+import { Widget } from '../../../models/widget.model.client';
 
 @Component({
   selector: 'app-widget-list',
@@ -11,29 +11,49 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class WidgetListComponent implements OnInit {
 
-  widgets: Widget[] = [];
-  pageID: String;
-  constructor(private activatedRoute: ActivatedRoute, private widgetService: WidgetService,  private domSanitizer: DomSanitizer) { }
+  public url;
+  userId: String;
+  websiteId: String;
+  pageId: String;
+  widgets = [{}];
+  widget = {};
+
+  constructor(
+    private widgetService: WidgetService,
+    private activatedRoute: ActivatedRoute,
+    private domSanitizer: DomSanitizer
+  ) {
+  }
 
   getURL(url: String) {
     return this.domSanitizer.bypassSecurityTrustResourceUrl(url.toString());
   }
 
-  sortWidget(indexes) {
-    this.widgetService.reSortWidget(this.pageID, indexes.startIndex, indexes.endIndex).subscribe();
-  }
-
   ngOnInit() {
     this.activatedRoute.params.subscribe(
       (params: any) => {
-        console.log(params['pid']);
-        this.pageID = params['pid'];
-        this.widgetService.findAllWidgetsForPage(this.pageID).subscribe(
-          (widgets: Widget[]) => {
-            this.widgets = widgets;
-          });
+        this.userId = params['uid'];
+        this.websiteId = params['uid'];
+        this.pageId = params['pid'];
+          console.log(this.widgets);
+          this.widgetService.findAllWidgetsForPage(this.pageId).subscribe(
+              (widgets: any[]) => {
+                  this.widgets = widgets;
+              });
       }
     );
+    // console.log(this.widgets);
+    // this.widgetService.findAllWidgetsForPage(this.pageId).subscribe(
+    //     (widgets: Widget[]) => {
+    //   this.widgets = widgets;
+    // });
   }
 
+  reorderWidgets(indexes) {
+    // call widget service function to update widget as per index
+    this.widgetService.reorderWidgets(indexes.startIndex, indexes.endIndex, this.pageId)
+      .subscribe(
+        (data) => console.log(data)
+      );
+  }
 }

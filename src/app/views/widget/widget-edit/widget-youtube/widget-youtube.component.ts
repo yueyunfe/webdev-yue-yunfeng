@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {WidgetService} from '../../../../services/widget.service.client';
-import {NgForm} from '@angular/forms';
-import {Widget} from '../../../../models/widget.model.client';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { WidgetService } from '../../../../services/widget.service.client';
+import { Widget } from '../../../../models/widget.model.client';
 
 @Component({
   selector: 'app-widget-youtube',
@@ -10,67 +10,54 @@ import {Widget} from '../../../../models/widget.model.client';
   styleUrls: ['./widget-youtube.component.css']
 })
 export class WidgetYoutubeComponent implements OnInit {
+  widget: any = {};
+  userId: String;
+  websiteId: String;
+  pageId: String;
+  widgetId: String;
 
-  @ViewChild('f') youtubeForm: NgForm;
-  pageID: String;
-  wgid: String;
-  width: String;
-  name: String;
-  text: String;
-  url: String;
-  widget: Widget;
-  constructor(private activatedRoute: ActivatedRoute, private widgetService: WidgetService, private route: Router) { }
+  constructor(
+    private widgetService: WidgetService, private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) { }
 
-  update () {
-    // if (this.youtubeForm.value.headName === '') {
-    //   alert('Please input header Name');
-    // }
-    this.widget.url = this.youtubeForm.value.url;
-    this.widget.text = this.youtubeForm.value.text;
-    this.widget.width = this.youtubeForm.value.width;
-    if (this.wgid === undefined) {
-      this.widgetService.createWidget(this.pageID, this.widget).subscribe(
-        (widget: Widget) => {
-          this.widget = widget;
-          this.route.navigate(['../'], {relativeTo: this.activatedRoute});
-        }
-      );
-    } else {
-      this.widgetService.updateWidget(this.wgid, this.widget).subscribe(
-        (widget: Widget) => {
-          this.widget = widget;
-          this.route.navigate(['../'], {relativeTo: this.activatedRoute});
-        }
-      );
-    }
-  }
-
-  delete () {
-    this.widgetService.deleteWidget(this.wgid).subscribe(
-      () => this.route.navigate(['../'], {relativeTo: this.activatedRoute})
-    );
-  }
   ngOnInit() {
     this.activatedRoute.params.subscribe(
       (params: any) => {
-        console.log(params['pid']);
-        this.pageID = params['pid'];
+        this.widgetId = params['wgid'];
+        this.pageId = params['pid'];
+        this.userId = params['uid'];
+        this.websiteId = params['wid'];
       }
     );
 
-    this.activatedRoute.params.subscribe(params => {
-      console.log(params['wgid']);
-      this.wgid = params['wgid'];
-    });
-
-    if (this.wgid === undefined) {
-      this.widget = new Widget(undefined, 'YOUTUBE', this.pageID, '', '', '', '');
-    } else {
-      this.widgetService.findWidgetById(this.wgid).subscribe(
-        (widget: Widget) => {
+    this.widgetService.findWidgetById(this.widgetId).subscribe(
+        (widget: any) => {
           this.widget = widget;
-        });
-    }
+        }
+    );
+    // this.widget = this.widgetService.findWidgetById(this.widgetId);
   }
 
+  updateWidget(updatedwidget: any) {
+    // this.widgetService.updateWidget(widget._id, widget);
+    // this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId + '/widget']);
+      this.widgetService.updateWidget(this.widgetId, updatedwidget).subscribe(
+          (widget: any) => {
+              const url: any = '/user/website/' + this.websiteId + '/page/' + this.pageId + '/widget';
+              this.router.navigate([url]);
+          }
+      );
+  }
+
+  deleteWidget() {
+    // this.widgetService.deleteWidget(this.widgetId);
+    // this.router.navigate(['/user/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId + '/widget']);
+      this.widgetService.deleteWidget(this.widgetId).subscribe(
+          (widget: any) => {
+              const url: any = '/user/website/' + this.websiteId + '/page/' + this.pageId + '/widget';
+              this.router.navigate([url]);
+          }
+      );
+  }
 }

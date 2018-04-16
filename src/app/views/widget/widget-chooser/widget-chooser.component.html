@@ -2,13 +2,13 @@
   <div class="container-fluid row">
 
     <div class="navbar-text pull-left">
-      <a routerLink="../" class="cl-text-black cl-icon-padding">
+      <a routerLink=".." class="cl-text-black cl-icon-padding">
           <span class="glyphicon glyphicon-chevron-left">
           </span>
       </a>
     </div>
 
-    <a class="navbar-brand cl-text-white cl-text-bold" routerLink=".">
+    <a class="navbar-brand cl-text-white cl-text-bold" routerLink="/#">
       Choose Widget
     </a>
   </div>
@@ -16,30 +16,47 @@
 
 <div class="container-fluid cl-container-padding">
   <ul class="list-group cl-list-group-borderless">
-      <li class="list-group-item cl-list-item-borderless">
-        <a routerLink="../header">HEADER</a>
-      </li>
-    <li class="list-group-item cl-list-item-borderless">
-      <a routerLink="../image">IMAGE</a>
+    <li class="list-group-item cl-list-item-borderless extra-padding">
+      <a class="btn" (click)="createWidget('HEADER')">Header</a>
     </li>
-    <li class="list-group-item cl-list-item-borderless">
-      <a routerLink="../youtube">YOUTUBE</a>
+    <!--<li class="list-group-item cl-list-item-borderless extra-padding">-->
+      <!--<a routerLink="/#">Label</a>-->
+    <!--</li>-->
+    <li class="list-group-item cl-list-item-borderless extra-padding">
+      <a class="btn" (click)="createWidget('HTML')">HTML</a>
     </li>
-    <li class="list-group-item cl-list-item-borderless">
-      <a routerLink="../html">HTML</a>
+    <li class="list-group-item cl-list-item-borderless extra-padding">
+      <a class="btn" (click)="createWidget('TEXT')">Text Input</a>
     </li>
-    <li class="list-group-item cl-list-item-borderless">
-      <a routerLink="../text">TEXT</a>
+    <!--<li class="list-group-item cl-list-item-borderless extra-padding">-->
+      <!--<a routerLink="/#">Link</a>-->
+    <!--</li>-->
+    <!--<li class="list-group-item cl-list-item-borderless extra-padding">-->
+      <!--<a routerLink="/#">Button</a>-->
+    <!--</li>-->
+    <li class="list-group-item cl-list-item-borderless extra-padding">
+      <a class="btn" (click)="createWidget('IMAGE')">Image</a>
     </li>
+    <li class="list-group-item cl-list-item-borderless extra-padding">
+      <a class="btn" (click)="createWidget('YOUTUBE')">YouTube</a>
+    </li>
+    <!--<li class="list-group-item cl-list-item-borderless extra-padding">-->
+      <!--<a routerLink="/#">Data Table</a>-->
+    <!--</li>-->
+    <!--<li class="list-group-item cl-list-item-borderless extra-padding">-->
+      <!--<a routerLink="/#">Repeater</a>-->
+    <!--</li>-->
   </ul>
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
   <div class="container-fluid row">
     <div class="pull-right navbar-text">
-      <a routerLink="../../../../../.." class="cl-icon-padding">
+
+      <a routerLink="/profile" class="cl-icon-padding">
         <span class="glyphicon glyphicon-user"></span>
       </a>
+
     </div>
   </div>
 </nav>
