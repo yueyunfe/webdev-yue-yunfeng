@@ -1,85 +1,108 @@
-import { Injectable } from '@angular/core';
-import { Http, RequestOptions, Response } from '@angular/http';
-import 'rxjs/Rx';
-import { environment } from '../../environments/environment';
-import { Router } from '@angular/router';
-
 import { User } from '../models/user.model.client';
+import {Injectable} from '@angular/core';
+import {Http, RequestOptions, Response} from '@angular/http';
+import 'rxjs/Rx';
+import {environment} from '../../environments/environment';
+import {SharedService} from './shared.service';
+import {Router} from '@angular/router';
 
-// injecting Http service into UserService
 @Injectable()
 export class UserService {
+  constructor(private http: Http, private sharedService: SharedService, private router: Router) {}
 
-    constructor(private http: Http) { }
+  baseUrl = environment.baseUrl;
+  options = new RequestOptions();
 
-    baseUrl = environment.baseUrl;
+  logout() {
+    this.options.withCredentials = true;
+    return this.http.post(this.baseUrl + '/api/logout', '', this.options)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
 
-    // users: User[] = [
-    //     { _id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder" },
-    //     { _id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley" },
-    //     { _id: "345", username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia" },
-    //     { _id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi" }
-    // ];
+  login(username: String, password: String) {
+    this.options.withCredentials = true; // jga
+    const body = {
+      username : username,
+      password : password
+    };
+    return this.http.post(this.baseUrl + '/api/login', body, this.options)
+      .map(
+        (res: Response) => {
+          const data = res.json();
+          return data;
+        }
+      );
+  }
 
-    // api = {
-    //     'createUser': this.createUser,
-    //     'findUserById': this.findUserById,
-    //     'findUserByUsername': this.findUserByUsername,
-    //     'findUserByCredentials': this.findUserByCredentials,
-    //     'updateUser': this.updateUser,
-    //     'deleteUser': this.deleteUser
-    // };
+  register(username: String, password: String) {
+    this.options.withCredentials = true;
+    const user = {
+      username : username,
+      password : password
+    };
 
-    createUser(user: User) {
-        const url = this.baseUrl + '/api/user';
-        return this.http.post(url, user).map(
-            (res: Response) => {
-                return res.json();
-            }
-        );
-    }
+    return this.http.post(this.baseUrl + '/api/register', user, this.options)
+      .map(
+        (res: Response) => {
+          const data = res.json();
+          return data;
+        }
+      );
+  }
 
-    findUserById(userId: String) {
-        const url = this.baseUrl + '/api/user/' + userId;
-        return this.http.get(url).map(
-            (res: Response) => {
-                const data = res.json();
-                return data;
-            }
-        );
-    }
+  loggedIn() {
+    this.options.withCredentials = true;
+    return this.http.post(this.baseUrl + '/api/loggedIn', '', this.options)
+      .map(
+        (res: Response) => {
+          const user = res.json();
+          if (user !== 0) {
+            this.sharedService.user = user; // setting user so as to share with all components
+            return true;
+          } else {
+            this.router.navigate(['/login']);
+            return false;
+          }
+        }
+      );
+  }
 
-    findUserByUsername(username: String) {
-        const url = this.baseUrl + '/api/user?username=' + username;
-        return this.http.get(url).map(
-            (response: Response) => {
-                return response.json();
-            }
-        );
-    }
+  dumpUser() {
+    return new User(undefined, undefined, undefined, undefined, undefined);
+  }
 
-    findUserByCredentials(username: String, password: String) {
-        const url = this.baseUrl + '/api/user?username=' + username + '&password=' + password;
-        return this.http.get(url).map(
-            (response: Response) => {
-                return response.json();
-            }
-        );
-    }
+  createUser(user: User) {
+    return this.http.post(this.baseUrl + '/api/user', user)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
 
-    updateUser(userId: String, user: User) {
-        const url = this.baseUrl + '/api/user/' + userId;
-        return this.http.put(url, user).map((response: Response) => {
-            return response.json();
-        });
-    }
+  findUserByCredential(username: String, password: String) {
+    return this.http.get(this.baseUrl + '/api/user?username=' + username + '&password=' + password)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
 
-    deleteUser(userId: String) {
-        const url = this.baseUrl + '/api/user/' + userId;
-        return this.http.delete(url).map(
-            (res: Response) => {
-                return res.json();
-            }
-        );
-    }
+  findUserById(userId: String) {
+    return this.http.get(this.baseUrl + '/api/user/' + userId)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
+
+  updateUser(user: User) {
+    const url =  this.baseUrl + '/api/user/' + user._id;
+    return this.http.put(url, user).map((response: Response) => {
+      return response.json();
+    });
+  }
+
+  deleteUser(userId: String) {
+    const url =  this.baseUrl + '/api/user/' + userId;
+    return this.http.delete(url);
+  }
 }
